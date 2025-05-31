@@ -19,6 +19,7 @@ public class SignalGridManager : MonoBehaviour
     [Header("UI")]
     public TMP_Text timerText;
     public TMP_Text movesText;
+    public TMP_Text hintText;
     public Button peekButton;
     public Button resetButton;
     public GameObject winPanel;
@@ -51,6 +52,11 @@ public class SignalGridManager : MonoBehaviour
 
         timer += Time.deltaTime;
         timerText.text = $"Time: {timer:F1}s";
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     public void GenerateGrid()
@@ -175,7 +181,8 @@ public class SignalGridManager : MonoBehaviour
 
         int random = Random.Range(0, tiles.Count);
         List<int> targets = tiles[random].toggleTargets;
-        Debug.Log($"🔍 Peek: Tile {random} toggles [{string.Join(", ", targets)}]");
+        Debug.Log($"Peek: Tile {random} toggles [{string.Join(", ", targets)}]");
+        hintText.text = $"🔍 Peek: Tile {random} toggles [{string.Join(", ", targets)}] Generate only one time";
         peekUsed = true;
     }
 
@@ -183,6 +190,8 @@ public class SignalGridManager : MonoBehaviour
     {
         timer = 0;
         moves = 0;
+        movesText.text = $"Moves: {moves}";
+        hintText.text ="" ;
         peekUsed = false;
         gameRunning = true;
         winPanel.SetActive(false);

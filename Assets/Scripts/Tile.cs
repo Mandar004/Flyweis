@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class Tile : MonoBehaviour
+public class Tile : MonoBehaviour, IPointerClickHandler
 {
     public int tileIndex;
     public bool isOn;
@@ -17,10 +18,9 @@ public class Tile : MonoBehaviour
         gridManager = SignalGridManager.Instance;
         img = GetComponent<Image>();
         UpdateVisual();
-        GetComponent<Button>().onClick.AddListener(OnClick);
     }
 
-    public void OnClick()
+    public void OnPointerClick(PointerEventData eventData)
     {
         gridManager.ToggleGroup(toggleTargets);
     }
